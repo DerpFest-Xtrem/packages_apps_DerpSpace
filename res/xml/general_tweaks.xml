@@ -32,6 +32,12 @@
             android:summary="@string/pie_animation_style_summary"
             android:defaultValue="false" />
 
+        <Preference
+            android:key="omnijaws_settings"
+            android:title="@string/qs_weather_settings_title"
+            android:summary="@string/qs_weather_settings_summary"
+            android:fragment="org.derpfest.derpspace.fragments.OmniJawsSettings" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
