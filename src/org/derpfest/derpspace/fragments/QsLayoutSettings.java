@@ -54,6 +54,7 @@ public class QsLayoutSettings extends SettingsPreferenceFragment
     private CustomSeekBarPreference mQsColumns;
     private CustomSeekBarPreference mQsRows;
     private CustomSeekBarPreference mQqsRows;
+    private SystemSettingListPreference mPageTransitions;
 
     private Button mApplyChange;
 
@@ -77,7 +78,7 @@ public class QsLayoutSettings extends SettingsPreferenceFragment
                 Settings.System.CUSTOM_TRANSITIONS_KEY,
                 0, UserHandle.USER_CURRENT);
         mPageTransitions.setValue(String.valueOf(customTransitions));
-        mPageTransitions.setSummary(mPageTransitions.getEntry())
+        mPageTransitions.setSummary(mPageTransitions.getEntry());
     }
 
     @Override
