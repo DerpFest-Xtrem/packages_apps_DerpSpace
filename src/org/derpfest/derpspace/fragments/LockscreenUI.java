@@ -28,6 +28,8 @@ import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 import android.view.IWindowManager;
 import android.view.View;
@@ -44,6 +46,7 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
 import com.android.settings.fuelgauge.batteryusage.PowerUsageSummary;
 import com.android.settings.R;
+import com.android.internal.util.derp.derpUtils;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 import com.android.settings.search.BaseSearchIndexProvider;
@@ -52,6 +55,8 @@ import com.android.settingslib.search.Indexable;
 import com.android.settingslib.search.SearchIndexable;
 
 import org.derpfest.support.preferences.SystemSettingListPreference;
+import org.derpfest.support.preferences.SecureSettingSwitchPreference;
+import org.derpfest.support.colorpicker.SecureSettingColorPickerPreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +69,9 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
 
     private static final String LOCKSCREEN_BATTERY_INFO_TEMP_UNIT = "lockscreen_charge_temp_unit";
     private static final String FINGERPRINT_VIB = "fingerprint_success_vib";
+    private static final String KG_CUSTOM_CLOCK_COLOR_ENABLED = "kg_custom_clock_color_enabled";
+
+    private SwitchPreference mKGCustomClockColor;
 
     private SystemSettingListPreference mBatteryTempUnit;
     private SwitchPreference mFingerprintVib;
@@ -74,7 +82,8 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
 
         addPreferencesFromResource(R.xml.lockscreen_ui);
 
-        final ContentResolver resolver = getActivity().getContentResolver();
+        final Context mContext = getActivity().getApplicationContext();
+        final ContentResolver resolver = mContext.getContentResolver();
         final PreferenceScreen prefScreen = getPreferenceScreen();
 
         int unitMode = Settings.System.getIntForUser(resolver,
@@ -89,6 +98,26 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
         mFingerprintVib.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.FINGERPRINT_SUCCESS_VIB, 1) == 1));
         mFingerprintVib.setOnPreferenceChangeListener(this);
+
+        mKGCustomClockColor = (SwitchPreference) findPreference(KG_CUSTOM_CLOCK_COLOR_ENABLED);
+        boolean mKGCustomClockColorEnabled = Settings.Secure.getIntForUser(resolver,
+                Settings.Secure.KG_CUSTOM_CLOCK_COLOR_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
+        mKGCustomClockColor.setChecked(mKGCustomClockColorEnabled);
+        mKGCustomClockColor.setOnPreferenceChangeListener(this);
+
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+	Context mContext = getActivity().getApplicationContext();
+	ContentResolver resolver = mContext.getContentResolver();
+        if (preference == mKGCustomClockColor) {
+            boolean val = (Boolean) newValue;
+            Settings.Secure.putIntForUser(resolver,
+                Settings.Secure.KG_CUSTOM_CLOCK_COLOR_ENABLED, val ? 1 : 0, UserHandle.USER_CURRENT);
+            return true;
+	}
+        return false;
     }
 
     @Override
