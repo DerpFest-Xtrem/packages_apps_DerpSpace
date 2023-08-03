@@ -605,4 +605,6 @@
     <string name="clock_use_single_line_title">Lockscreen clock Format</string>
     <string name="single_line">Single-line</string>
     <string name="double_line">Double-line</string>
+    <string name="kg_small_clock_text_size_title">Small Lockscreen clock size</string>
+    <string name="kg_big_clock_text_size_title">Double-line Lockscreen clock size</string>
 </resources>
