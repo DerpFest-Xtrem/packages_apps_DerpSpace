@@ -62,6 +62,15 @@
             android:summary="%s"
             android:defaultValue="0" />
 
+       <org.derpfest.support.preferences.SecureSettingSeekBarPreference
+            android:key="kg_custom_clock_top_margin"
+            android:title="@string/kg_custom_clock_top_margin_title"
+            android:max="500"
+            settings:min="80"
+            settings:interval="1"
+            android:defaultValue="280"
+            settings:units="dp" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
