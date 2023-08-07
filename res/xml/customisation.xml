@@ -89,6 +89,12 @@
             android:defaultValue="0" />
 
        <org.derpfest.support.preferences.SystemSettingSwitchPreference
+            android:title="Brightness Percentage"
+            android:key="ANCIENT_TEXT_BRIGHTNESS"
+            android:summary="show hide brightness percentage text"
+            android:defaultValue="false" />
+
+       <org.derpfest.support.preferences.SystemSettingSwitchPreference
             android:key="VOLUME_TEXTVIEW"
             android:title="@string/volume_persen_switch_title"
             android:summary="@string/volume_persen_switch_summary"
