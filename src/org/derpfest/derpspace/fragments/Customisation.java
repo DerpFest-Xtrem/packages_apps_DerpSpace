@@ -79,6 +79,15 @@ public class Customisation extends SettingsPreferenceFragment implements OnPrefe
 
     private static final String TAG = "Customisation";
     private static final String KEY_QS_PANEL_STYLE  = "qs_panel_style";
+    private static final String VOLUMEBAR_STYLES = "VOLUME_BAR_STYLES";
+
+    private static final String VOLUMEBAR_OVERLAY_STYLE1 = "com.custom.overlay.systemui.volume1";
+    private static final String VOLUMEBAR_OVERLAY_STYLE2 = "com.custom.overlay.systemui.volume2"; 
+    private static final String VOLUMEBAR_OVERLAY_STYLE3 = "com.custom.overlay.systemui.volume3";        
+    private static final String VOLUMEBAR_OVERLAY_STYLE4 = "com.custom.overlay.systemui.volume4"; 
+    private static final String VOLUMEBAR_OVERLAY_STYLE5 = "com.custom.overlay.systemui.volume5";
+
+    private SystemSettingListPreference CustomVolumeStyle;
 
     private Context mContext;
     private Handler mHandler;
@@ -103,6 +112,19 @@ public class Customisation extends SettingsPreferenceFragment implements OnPrefe
 
         mQsStyle = (SystemSettingListPreference) findPreference(KEY_QS_PANEL_STYLE);
         mCustomSettingsObserver.observe();
+
+        mContext = getActivity();
+
+        mOverlayService = IOverlayManager.Stub
+                .asInterface(ServiceManager.getService(Context.OVERLAY_SERVICE));
+
+        CustomVolumeStyle = (SystemSettingListPreference) findPreference("VOLUME_BAR_STYLES");
+        int CuVolumeStyle = Settings.System.getIntForUser(getContentResolver(),
+                "VOLUME_BAR_STYLES", 0, UserHandle.USER_CURRENT);
+        int valueIndexvol = CustomVolumeStyle.findIndexOfValue(String.valueOf(CuVolumeStyle));
+        CustomVolumeStyle.setValueIndex(valueIndexvol >= 0 ? valueIndexvol : 0);
+        CustomVolumeStyle.setSummary(CustomVolumeStyle.getEntry());
+        CustomVolumeStyle.setOnPreferenceChangeListener(this);
 
         boolean udfpsResPkgInstalled = derpUtils.isPackageInstalled(getContext(),
                 "org.derp.udfps.resources");
@@ -150,7 +172,54 @@ public class Customisation extends SettingsPreferenceFragment implements OnPrefe
         if (preference == mQsStyle) {
            mCustomSettingsObserver.observe();
            return true;
-        }
+       } else if (preference == CustomVolumeStyle) {
+            int VolumeStyle = Integer.valueOf((String) newValue);
+            Settings.System.putIntForUser(getContentResolver(),
+                    "VOLUME_BAR_STYLES", VolumeStyle, UserHandle.USER_CURRENT);
+            CustomVolumeStyle.setSummary(CustomVolumeStyle.getEntries()[VolumeStyle]);
+                if (VolumeStyle == 0) {
+                   try {
+                      mOverlayService.setEnabled(VOLUMEBAR_OVERLAY_STYLE1, false, USER_CURRENT);
+                      mOverlayService.setEnabled(VOLUMEBAR_OVERLAY_STYLE2, false, USER_CURRENT);
+                      mOverlayService.setEnabled(VOLUMEBAR_OVERLAY_STYLE3, false, USER_CURRENT);
+                      mOverlayService.setEnabled(VOLUMEBAR_OVERLAY_STYLE4, false, USER_CURRENT);
+                      mOverlayService.setEnabled(VOLUMEBAR_OVERLAY_STYLE5, false, USER_CURRENT);     
+                   } catch (RemoteException re) {
+                      throw re.rethrowFromSystemServer();
+                   }
+               } else if (VolumeStyle == 1) {
+                   try {
+                      mOverlayService.setEnabledExclusiveInCategory(VOLUMEBAR_OVERLAY_STYLE1, USER_CURRENT);   
+                   } catch (RemoteException re) {
+                      throw re.rethrowFromSystemServer();
+                   }
+               } else if (VolumeStyle == 2) {
+                   try {
+                      mOverlayService.setEnabledExclusiveInCategory(VOLUMEBAR_OVERLAY_STYLE2, USER_CURRENT);   
+                   } catch (RemoteException re) {
+                      throw re.rethrowFromSystemServer();
+                   }
+                } else if (VolumeStyle == 3) {
+                   try {
+                      mOverlayService.setEnabledExclusiveInCategory(VOLUMEBAR_OVERLAY_STYLE3, USER_CURRENT);     
+                   } catch (RemoteException re) {
+                      throw re.rethrowFromSystemServer();
+                   }
+                } else if (VolumeStyle == 4) {
+                   try {
+                      mOverlayService.setEnabledExclusiveInCategory(VOLUMEBAR_OVERLAY_STYLE4, USER_CURRENT);     
+                   } catch (RemoteException re) {
+                      throw re.rethrowFromSystemServer();
+                   }
+                } else if (VolumeStyle == 5) {
+                   try {
+                      mOverlayService.setEnabledExclusiveInCategory(VOLUMEBAR_OVERLAY_STYLE5, USER_CURRENT);     
+                   } catch (RemoteException re) {
+                      throw re.rethrowFromSystemServer();
+                   }
+                }
+            return true;
+          }
         return false;
     }
 
