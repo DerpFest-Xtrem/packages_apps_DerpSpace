@@ -607,4 +607,11 @@
     <string name="double_line">Double-line</string>
     <string name="kg_small_clock_text_size_title">Small Lockscreen clock size</string>
     <string name="kg_big_clock_text_size_title">Double-line Lockscreen clock size</string>
+
+    <!-- Volume TextView -->
+    <string name="volume_persen_switch_title">Volume Percentage</string>
+    <string name="volume_persen_switch_summary">show volume panel percentage</string>
+    <string name="volume_persen_style_title">Percentage Location</string>
+    <string name="volume_persen_style_top">Top</string>
+    <string name="volume_persen_style_bottom">Bottom</string>
 </resources>

@@ -108,19 +108,6 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-	Context mContext = getActivity().getApplicationContext();
-	ContentResolver resolver = mContext.getContentResolver();
-        if (preference == mKGCustomClockColor) {
-            boolean val = (Boolean) newValue;
-            Settings.Secure.putIntForUser(resolver,
-                Settings.Secure.KG_CUSTOM_CLOCK_COLOR_ENABLED, val ? 1 : 0, UserHandle.USER_CURRENT);
-            return true;
-	}
-        return false;
-    }
-
-    @Override
     public int getMetricsCategory() {
         return MetricsEvent.DERP;
     }
@@ -132,6 +119,8 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object objValue) {
+        Context mContext = getActivity().getApplicationContext();
+	ContentResolver resolver = mContext.getContentResolver();
         if (preference == mBatteryTempUnit) {
             int value = Integer.parseInt((String) objValue);
             Settings.System.putIntForUser(getActivity().getContentResolver(),
@@ -145,6 +134,11 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
             boolean value = (Boolean) objValue;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.FINGERPRINT_SUCCESS_VIB, value ? 1 : 0);
+            return true;
+        } else if (preference == mKGCustomClockColor) {
+            boolean val = (Boolean) objValue;
+            Settings.Secure.putIntForUser(resolver,
+                Settings.Secure.KG_CUSTOM_CLOCK_COLOR_ENABLED, val ? 1 : 0, UserHandle.USER_CURRENT);
             return true;
         }
         return false;
