@@ -36,6 +36,7 @@ import com.android.settingslib.widget.LayoutPreference;
 
 import org.derpfest.support.preferences.CustomSeekBarPreference;
 import org.derpfest.support.preferences.SystemSettingSwitchPreference;
+import org.derpfest.support.preferences.SystemSettingSeekBarPreference;
 import org.derpfest.support.preferences.SystemSettingListPreference;
 
 public class QsLayoutSettings extends SettingsPreferenceFragment
@@ -51,9 +52,9 @@ public class QsLayoutSettings extends SettingsPreferenceFragment
 
     private Context mContext;
 
-    private CustomSeekBarPreference mQsColumns;
-    private CustomSeekBarPreference mQsRows;
-    private CustomSeekBarPreference mQqsRows;
+    private SystemSettingSeekBarPreference mQsColumns;
+    private SystemSettingSeekBarPreference mQsRows;
+    private SystemSettingSeekBarPreference mQqsRows;
     private SystemSettingListPreference mPageTransitions;
 
     private Button mApplyChange;
@@ -85,13 +86,13 @@ public class QsLayoutSettings extends SettingsPreferenceFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mQsColumns = (CustomSeekBarPreference) findPreference(KEY_QS_COLUMN_PORTRAIT);
+        mQsColumns = (SystemSettingSeekBarPreference) findPreference(KEY_QS_COLUMN_PORTRAIT);
         mQsColumns.setOnPreferenceChangeListener(this);
 
-        mQsRows = (CustomSeekBarPreference) findPreference(KEY_QS_ROW_PORTRAIT);
+        mQsRows = (SystemSettingSeekBarPreference) findPreference(KEY_QS_ROW_PORTRAIT);
         mQsRows.setOnPreferenceChangeListener(this);
 
-        mQqsRows = (CustomSeekBarPreference) findPreference(KEY_QQS_ROW_PORTRAIT);
+        mQqsRows = (SystemSettingSeekBarPreference) findPreference(KEY_QQS_ROW_PORTRAIT);
         mQqsRows.setOnPreferenceChangeListener(this);
 
         mContext = getContext();
