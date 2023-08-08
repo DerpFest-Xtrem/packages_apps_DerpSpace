@@ -58,6 +58,22 @@
             android:summary="@string/qs_tile_vertical_layout_summary"
             android:defaultValue="false" />
 
+        <org.derpfest.support.preferences.SystemSettingSwitchPreference
+            android:key="qs_enable_morphing"
+       	    android:title="@string/qs_enable_morphing"
+            android:defaultValue="true" />
+
+        <org.derpfest.support.preferences.SystemSettingSwitchPreference
+            android:key="qs_invert_morphing"
+            android:title="@string/qs_invert_morphing"
+            android:dependency="qs_enable_morphing"
+            android:defaultValue="false" />
+
+        <org.derpfest.support.preferences.SystemSettingSwitchPreference
+            android:key="qs_full_morphing"
+            android:title="@string/qs_full_morphing"
+            android:defaultValue="false" />
+
         <com.android.settingslib.widget.LayoutPreference
             android:key="apply_change_button"
             android:layout="@layout/qs_tile_apply_change_button" />

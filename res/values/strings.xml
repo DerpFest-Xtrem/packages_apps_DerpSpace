@@ -654,7 +654,9 @@
     <string name="qs_apply_change_failed">Failed to apply change</string>
     <string name="qs_tile_vertical_layout_title">Vertical layout</string>
     <string name="qs_tile_vertical_layout_summary">Enable vertical layout for QS tiles</string>
-
+    <string name="qs_enable_morphing">Enable Morping on qs tiles</string>
+    <string name="qs_invert_morphing">Swap Morphing on qs tiles</string>
+    <string name="qs_full_morphing">Full Rounded on qs tiles</string>
 
     <!-- QS Page Transitions -->
     <string name="qs_transitions_title">QS Page Transitions</string>
